@@ -7,6 +7,6 @@ class Player(pygame.sprite.Sprite):
         
         super().__init__(groups)
 
-        self.image = pygame.Surface(TILE_SIZE // 2, TILE_SIZE)
+        self.image = pygame.Surface((TILE_SIZE // 2, TILE_SIZE))
         self.image.fill(PLAYER_COLOR)
         self.rect = self.image.get_rect(topleft = pos)
