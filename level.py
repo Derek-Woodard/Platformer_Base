@@ -45,14 +45,37 @@ class CameraGroup(pygame.sprite.Group):
         self.offset = pygame.math.Vector2(100,300)
 
         # player centered camera setup
-        self.half_w = self.display_surface.get_size()[0] //2
-        self.half_h = self.display_surface.get_size()[1] //2
+        # self.half_w = self.display_surface.get_size()[0] //2
+        # self.half_h = self.display_surface.get_size()[1] //2
+
+        # camera box
+        cam_left = CAMERA_BORDERS['left']
+        cam_top = CAMERA_BORDERS['top']
+        cam_w = self.display_surface.get_size()[0] - (cam_left + CAMERA_BORDERS['right'])
+        cam_h = self.display_surface.get_size()[1] - (cam_top + CAMERA_BORDERS['bottom'])
+
+        self.camera_rect = pygame.Rect(cam_left,cam_top,cam_w,cam_h)
 
     def custom_draw(self,player):
 
         # get player offset for centered camera
-        self.offset.x = player.rect.centerx - self.half_w
-        self.offset.y = player.rect.centery - self.half_h
+        # self.offset.x = player.rect.centerx - self.half_w
+        # self.offset.y = player.rect.centery - self.half_h
+
+        # get camera position
+        if player.rect.left < self.camera_rect.left:
+            self.camera_rect.left = player.rect.left
+        if player.rect.right > self.camera_rect.right:
+            self.camera_rect.right = player.rect.right
+        if player.rect.top < self.camera_rect.top:
+            self.camera_rect.top = player.rect.top
+        if player.rect.bottom > self.camera_rect.bottom:
+            self.camera_rect.bottom = player.rect.bottom
+
+        # camera offset for camera box
+        self.offset = pygame.math.Vector2(
+            self.camera_rect.left - CAMERA_BORDERS['left'],
+            self.camera_rect.top - CAMERA_BORDERS['top'])
 
         for sprite in self.sprites():
             offset_pos = sprite.rect.topleft - self.offset
