@@ -45,11 +45,8 @@ class CameraGroup(pygame.sprite.Group):
         self.offset = pygame.math.Vector2(100,300)
 
         # player centered camera setup
-        # self.half_w = self.display_surface.get_size()[0] //2
-        # self.half_h = self.display_surface.get_size()[1] //2
-
-        # camera box
-        
+        self.half_w = self.display_surface.get_size()[0] //2
+        self.half_h = self.display_surface.get_size()[1] //2
 
     def custom_draw(self,player):
 
